@@ -35,7 +35,7 @@ if [[ "${RELEASE_TYPE}" == "SNAPSHOT" ]]; then
     echo "SNAPSHOT 版本打包完成"
 elif [[ "${RELEASE_TYPE}" == "RELEASE" ]]; then
     TAR_FILE="image-RELEASE-${TS}.tar"
-    tar -C output -cf "$TAR_FILE" image
+    tar -cf output/TAR_FILE -C output/image .
     echo "RELEASE 版本打包完成"
 
 else
