@@ -6,6 +6,7 @@ Manifest=$1
 RELEASE_TYPE=$2
 DEVICE_MODEL=$3
 mkdir -p "$Manifest" && cd "$Manifest"
+catalogue=$(pwd)
 if [ -d .repo ]; then
     echo "Existing repo workspace found, skip init and sync directly..."
     repo sync -c -j$(nproc)
@@ -16,7 +17,6 @@ else
               -m $DEVICE_MODEL/$Manifest
 
     repo sync -c -j$(nproc)
-    catalogue=$(pwd)
     ln -s $catalogue/tools/linux/toolchain \
           /opt/toolchain
 fi
