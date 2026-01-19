@@ -5,7 +5,7 @@ set -e
 Manifest=$1
 RELEASE_TYPE=$2
 DEVICE_MODEL=$3
-mkdir -p "$Manifest" && cd "$Manifest"
+cd "$Manifest"
 catalogue=$(pwd)
 if [ -d .repo ]; then
     echo "Existing repo workspace found, skip init and sync directly..."
@@ -18,10 +18,9 @@ else
 
     repo sync -c -j$(nproc)
     ln -s $catalogue/tools/linux/toolchain \
-          /opt/toolchain
+          /opt/toolchain || true
 fi
 
-[ -d output ] && rm -rf output
 
 bash build.sh all
 
