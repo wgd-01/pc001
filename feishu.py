@@ -6,7 +6,7 @@ import os
 
 JOB_NAME = os.getenv("JOB_NAME", "未知任务")
 BUILD_USER = os.getenv("BUILD_USER", "未知")
-GIT_BRANCH = os.getenv("GIT_BRANCH", "未知")
+Manifest = os.getenv("Manifest", "未知")
 #BUILD_URL = os.getenv("BUILD_URL", "")
 JOB_URL = os.getenv("JOB_URL")
 BUILD_NUMBER = os.getenv("BUILD_NUMBER")
@@ -28,7 +28,7 @@ else:
 
 # 文本内容
 content = (
-    f"**构建分支**：{GIT_BRANCH}\n"
+    f"**清单文件**：{Manifest}\n"
     f"**构建用户**：{BUILD_USER}\n"
 )
 
