@@ -5,6 +5,7 @@ set -e
 DEVICE_MODEL=$1
 RELEASE_TYPE=$2
 Manifest=$3
+cd "$Manifest"
 FIRMWARE_FILE=$(ls output/*.tar 2>/dev/null | head -n1)
 
 
