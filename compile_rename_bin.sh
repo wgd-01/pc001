@@ -13,7 +13,8 @@ else
     echo "Initializing repo workspace..."
     printf "auto\n" | repo init  -u https://github.com/DesignLibro/Firmware-manifests.git \
               -b master \
-              -m $DEVICE_MODEL/$Manifest \
+              -m $DEVICE_MODEL/$Manifest
+
     repo sync -c -j$(nproc)
     catalogue=$(pwd)
     ln -s $catalogue/tools/linux/toolchain \
