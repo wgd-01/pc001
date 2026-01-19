@@ -41,5 +41,5 @@ echo "====== 上传完成 ======"
 # 生成浏览器可直接打开的 https 下载地址
 DOWNLOAD_URL="https://${COS_BUCKET}.cos.${COS_REGION}.myqcloud.com/${REMOTE_PATH}"
 # 写入临时文件，供 Jenkins 下游步骤读取
-echo "DOWNLOAD_URL=${DOWNLOAD_URL}" > ./$Manifest/download_url.properties
-echo "FIRMWARE_NAME=$(basename "$FIRMWARE_FILE")" >> ./$Manifest/download_url.properties
+echo "DOWNLOAD_URL=${DOWNLOAD_URL}" > download_url.properties
+echo "FIRMWARE_NAME=$(basename "$FIRMWARE_FILE")" >> download_url.properties
