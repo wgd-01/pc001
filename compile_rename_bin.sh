@@ -18,7 +18,7 @@ else
     repo sync -c -j$(nproc)
     catalogue=$(pwd)
     ln -s $catalogue/tools/linux/toolchain \
-          $catalogue/toolchain
+          /opt/toolchain
 fi
 
 [ -d output ] && rm -rf output
