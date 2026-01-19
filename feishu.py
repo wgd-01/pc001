@@ -33,7 +33,7 @@ content = (
 )
 
 if BUILD_STATUS == "SUCCESS":
-    content += f"**固件名称**：`{FIRMWARE_NAME}`"
+    content += f"**固件名称**：{FIRMWARE_NAME}"
 else:
     content += "**失败原因**：构建或上传阶段失败"
 
