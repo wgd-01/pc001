@@ -29,7 +29,7 @@ COS_REGION=${COS_REGION:-ap-guangzhou}
 
 # 上传
 
-REMOTE_PATH="embedded/${DEVICE_MODEL}/$RELEASE_TYPE/$(basename "$FIRMWARE_FILE")"
+REMOTE_PATH="embedded/$RELEASE_TYPE/${DEVICE_MODEL}/$(basename "$FIRMWARE_FILE")"
 echo "====== 开始上传 ======"
 echo "本地文件 : $FIRMWARE_FILE"
 echo "远程路径 : cos://${COS_BUCKET}/${REMOTE_PATH}"
