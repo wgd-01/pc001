@@ -17,8 +17,9 @@ else
               -m $DEVICE_MODEL/$Manifest
 
     repo sync -c -j$(nproc)
-    ln -s $catalogue/tools/linux/toolchain \
+    ln -sfn $catalogue/tools/linux/toolchain \
           /opt/toolchain || true
+    ll /opt/toolchain
 fi
 
 
