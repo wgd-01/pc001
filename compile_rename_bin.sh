@@ -12,7 +12,7 @@ if [ -d .repo ]; then
     repo sync -c -j$(nproc)
     ln -sfn $catalogue/tools/linux/toolchain \
           /opt/toolchain || true
-    ll /opt/toolchain
+    ls -l /opt/toolchain
 else
     echo "Initializing repo workspace..."
     printf "auto\n" | repo init  -u https://github.com/DesignLibro/Firmware-manifests.git \
@@ -22,7 +22,7 @@ else
     repo sync -c -j$(nproc)
     ln -sfn $catalogue/tools/linux/toolchain \
           /opt/toolchain || true
-    ll /opt/toolchain
+    ls -l /opt/toolchain
 fi
 
 
