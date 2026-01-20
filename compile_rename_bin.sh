@@ -10,6 +10,9 @@ catalogue=$(pwd)
 if [ -d .repo ]; then
     echo "Existing repo workspace found, skip init and sync directly..."
     repo sync -c -j$(nproc)
+    ln -sfn $catalogue/tools/linux/toolchain \
+          /opt/toolchain || true
+
 else
     echo "Initializing repo workspace..."
     printf "auto\n" | repo init  -u https://github.com/DesignLibro/Firmware-manifests.git \
