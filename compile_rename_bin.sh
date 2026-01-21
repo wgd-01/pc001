@@ -5,28 +5,79 @@ set -e
 Manifest=$1
 RELEASE_TYPE=$2
 DEVICE_MODEL=$3
+TAG="${TAG:-}"
 cd "$Manifest"
 catalogue=$(pwd)
-if [ -d .repo ]; then
-    echo "Existing repo workspace found, skip init and sync directly..."
+echo "TAG = '${TAG}'"
+
+sync_and_toolchain() {
+    # 拉取最新的manifests
     cd .repo/manifests
     git pull
     cd -
-    repo sync -c -j$(nproc)
-    ln -sfn $catalogue/tools/linux/toolchain \
-          /opt/toolchain || true
-    ls -l /opt/toolchain
-else
-    echo "Initializing repo workspace..."
-    printf "auto\n" | repo init  -u https://github.com/DesignLibro/Firmware-manifests.git \
-              -b master \
-              -m $DEVICE_MODEL/$Manifest
 
     repo sync -c -j$(nproc)
-    ln -sfn $catalogue/tools/linux/toolchain \
-          /opt/toolchain || true
+
+    ln -sfn "$catalogue/tools/linux/toolchain" /opt/toolchain || true
     ls -l /opt/toolchain
+}
+
+checkout_tag_if_needed() {
+    if [ -n "$TAG" ]; then
+        echo "Checking out TAG: $TAG"
+        repo forall -c "git checkout $TAG"
+    else
+        echo "TAG is empty, skip checkout"
+    fi
+}
+
+
+if [ -d .repo ]; then
+    echo "Existing repo workspace found"
+
+    sync_and_toolchain
+    checkout_tag_if_needed
+
+else
+    echo "Repo workspace not found, initializing..."
+
+    printf "auto\n" | repo init \
+        -u https://github.com/DesignLibro/Firmware-manifests.git \
+        -b master \
+        -m "$DEVICE_MODEL/$Manifest"
+
+    repo sync -c -j$(nproc)
+
+    ln -sfn "$catalogue/tools/linux/toolchain" /opt/toolchain || true
+    ls -l /opt/toolchain
+
+    checkout_tag_if_needed
 fi
+
+
+
+
+
+#if [ -d .repo ]; then
+#    echo "Existing repo workspace found, skip init and sync directly..."
+#    cd .repo/manifests
+#    git pull
+#    cd -
+#    repo sync -c -j$(nproc)
+#    ln -sfn $catalogue/tools/linux/toolchain \
+#          /opt/toolchain || true
+#    ls -l /opt/toolchain
+#else
+#    echo "Initializing repo workspace..."
+#    printf "auto\n" | repo init  -u https://github.com/DesignLibro/Firmware-manifests.git \
+#              -b master \
+#              -m $DEVICE_MODEL/$Manifest
+#
+#    repo sync -c -j$(nproc)
+#    ln -sfn $catalogue/tools/linux/toolchain \
+#          /opt/toolchain || true
+#    ls -l /opt/toolchain
+#fi
 
 
 bash build.sh all
@@ -41,6 +92,10 @@ if [[ "${RELEASE_TYPE}" == "SNAPSHOT" ]]; then
     echo "SNAPSHOT 版本打包完成"
 elif [[ "${RELEASE_TYPE}" == "RELEASE" ]]; then
     TAR_FILE="image-RELEASE-${TS}.tar"
+    update_otamd5=$(md5sum $catalogue/output/image/update_ota.tar | awk '{print $1}')
+    touch $catalogue/output/image/update_ota_$update_otamd5
+    update_md5=$(md5sum $catalogue/output/image/update.img | awk '{print $1}')
+    touch $catalogue/output/image/update_$update_md5
     tar -cf $catalogue/output/$TAR_FILE -C $catalogue/output/image .
     echo "RELEASE 版本打包完成"
 
