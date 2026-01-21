@@ -9,6 +9,9 @@ cd "$Manifest"
 catalogue=$(pwd)
 if [ -d .repo ]; then
     echo "Existing repo workspace found, skip init and sync directly..."
+    cd .repo/manifests
+    git pull
+    cd -
     repo sync -c -j$(nproc)
     ln -sfn $catalogue/tools/linux/toolchain \
           /opt/toolchain || true
