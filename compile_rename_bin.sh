@@ -10,16 +10,21 @@ cd "$Manifest"
 catalogue=$(pwd)
 echo "TAG = '${TAG}'"
 
-sync_and_toolchain() {
-    # 拉取最新的manifests
+init_repo() {
+    printf "auto\n" | repo init \
+        -u https://github.com/DesignLibro/Firmware-manifests.git \
+        -b master \
+        -m "$DEVICE_MODEL/$Manifest"
+
+    repo sync -c -j$(nproc)
+}
+
+sync_repo() {
     cd .repo/manifests
     git pull
     cd -
 
     repo sync -c -j$(nproc)
-
-    ln -sfn "$catalogue/tools/linux/toolchain" /opt/toolchain || true
-    ls -l /opt/toolchain
 }
 
 checkout_tag_if_needed() {
@@ -31,29 +36,23 @@ checkout_tag_if_needed() {
     fi
 }
 
+setup_toolchain() {
+    ln -sfn "$catalogue/tools/linux/toolchain" /opt/toolchain || true
+    ls -l /opt/toolchain
+}
 
 if [ -d .repo ]; then
     echo "Existing repo workspace found"
-
-    sync_and_toolchain
+    sync_repo
     checkout_tag_if_needed
-
+    setup_toolchain
 else
     echo "Repo workspace not found, initializing..."
-
-    printf "auto\n" | repo init \
-        -u https://github.com/DesignLibro/Firmware-manifests.git \
-        -b master \
-        -m "$DEVICE_MODEL/$Manifest"
-
-    repo sync -c -j$(nproc)
-
-    ln -sfn "$catalogue/tools/linux/toolchain" /opt/toolchain || true
-    ls -l /opt/toolchain
-
+    init_repo
     checkout_tag_if_needed
-fi
+    setup_toolchain
 
+fi
 
 
 
