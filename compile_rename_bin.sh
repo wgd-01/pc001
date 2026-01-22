@@ -38,7 +38,7 @@ checkout_tag_if_needed() {
 
 setup_toolchain() {
 #    ln -sfn "$catalogue/tools/linux/toolchain" /opt/toolchain || true
-#    cp -rd $catalogue/tools/linux/toolchain /opt/ 
+    cp -rd $catalogue/tools/linux/toolchain /opt/ 
 #    echo "export PATH=/opt/toolchain/arm-rockchip830-linux-gnueabihf/bin:$PATH" >> ~/.bashrc
 #    source ~/.bashrc
     TOOLCHAIN_ROOT="/opt/toolchain"
