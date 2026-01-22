@@ -42,7 +42,12 @@ setup_toolchain() {
 #    echo "export PATH=/opt/toolchain/arm-rockchip830-linux-gnueabihf/bin:$PATH" >> ~/.bashrc
 #    source ~/.bashrc
     TOOLCHAIN_ROOT="/opt/toolchain"
-    for tc in "$TOOLCHAIN_ROOT"/*; do if [ -d "$tc/bin" ]; then export PATH="$tc/bin:$PATH" fi done
+
+    for tc in "$TOOLCHAIN_ROOT"/*; do
+        if [ -d "$tc/bin" ]; then
+            export PATH="$tc/bin:$PATH"
+        fi
+    done
     which arm-rockchip1240-linux-gnueabihf-gcc
     which aarch64-rockchip1240-linux-gnu-gcc
 }
