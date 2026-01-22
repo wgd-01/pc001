@@ -48,7 +48,12 @@ setup_toolchain() {
             export PATH="$tc/bin:$PATH"
         fi
     done
-    which arm-rockchip1240-linux-gnueabihf-gcc
+    if ! which arm-rockchip1240-linux-gnueabihf-gcc >/dev/null 2>&1; then
+       echo "❌ 没有找到 arm-rockchip1240-linux-gnueabihf-gcc"
+       exit 1
+    else
+        echo "✅ 找到 arm-rockchip1240-linux-gnueabihf-gcc: $(which arm-rockchip1240-linux-gnueabihf-gcc)"
+    fi
     which aarch64-rockchip1240-linux-gnu-gcc
 }
 
