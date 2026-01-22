@@ -15,7 +15,7 @@ BUILD_STATUS = os.getenv("BUILD_STATUS", "FAILURE")
 
 DOWNLOAD_URL = os.getenv("DOWNLOAD_URL")
 FIRMWARE_NAME = os.getenv("FIRMWARE_NAME", "未知")
-
+TAG_NAME = os.getenv("TAG", "未知")
 # 飞书 Webhook（注意：不要有空格）
 WEBHOOK_URL = "https://open.feishu.cn/open-apis/bot/v2/hook/6521b95e-3d37-4e91-823f-379c774b0d8a"
 
@@ -32,6 +32,7 @@ content = (
     f"**清单文件**：{Manifest}\n"
     f"**构建用户**：{BUILD_USER}\n"
     f"**发布类型**：{RELEASE_TYPE}\n"
+    f"**TAG**：{TAG_NAME}\n"
 )
 
 if BUILD_STATUS == "SUCCESS":
