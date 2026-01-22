@@ -32,7 +32,7 @@ content = (
     f"**清单文件**：{Manifest}\n"
     f"**构建用户**：{BUILD_USER}\n"
     f"**发布类型**：{RELEASE_TYPE}\n"
-    f"**TAG**：{TAG_NAME}\n"
+    f"**TAG**：     {TAG_NAME}\n"
 )
 
 if BUILD_STATUS == "SUCCESS":
