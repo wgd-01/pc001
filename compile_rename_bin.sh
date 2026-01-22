@@ -37,8 +37,14 @@ checkout_tag_if_needed() {
 }
 
 setup_toolchain() {
-    ln -sfn "$catalogue/tools/linux/toolchain" /opt/toolchain || true
-    ls -l /opt/toolchain
+#    ln -sfn "$catalogue/tools/linux/toolchain" /opt/toolchain || true
+#    cp -rd $catalogue/tools/linux/toolchain /opt/ 
+#    echo "export PATH=/opt/toolchain/arm-rockchip830-linux-gnueabihf/bin:$PATH" >> ~/.bashrc
+#    source ~/.bashrc
+    TOOLCHAIN_ROOT="/opt/toolchain"
+    for tc in "$TOOLCHAIN_ROOT"/*; do if [ -d "$tc/bin" ]; then export PATH="$tc/bin:$PATH" fi done
+    which arm-rockchip1240-linux-gnueabihf-gcc
+    which aarch64-rockchip1240-linux-gnu-gcc
 }
 
 if [ -d .repo ]; then
