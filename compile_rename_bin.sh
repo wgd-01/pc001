@@ -60,13 +60,13 @@ setup_toolchain() {
 if [ -d .repo ]; then
     echo "Existing repo workspace found"
     sync_repo
-    checkout_tag_if_needed
     setup_toolchain
+    checkout_tag_if_needed
 else
     echo "Repo workspace not found, initializing..."
     init_repo
-    checkout_tag_if_needed
     setup_toolchain
+    checkout_tag_if_needed
 
 fi
 
