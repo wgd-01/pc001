@@ -111,7 +111,7 @@ elif [[ "${RELEASE_TYPE}" == "RELEASE" ]]; then
     touch $catalogue/output/image/update_ota_$update_otamd5
     update_md5=$(md5sum $catalogue/output/image/update.img | awk '{print $1}')
     touch $catalogue/output/image/update_$update_md5
-    tar -cf $catalogue/output/$TAR_FILE -C $catalogue/output/image .
+    tar -zcf $catalogue/output/$TAR_FILE -C $catalogue/output/image .
     echo "RELEASE 版本打包完成"
 
 else
